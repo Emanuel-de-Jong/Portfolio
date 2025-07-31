@@ -29,17 +29,17 @@ header h1 {
     margin-top: 2rem;
 }
 
-#projects #filters #search {
+#projects .filters .search {
     width: 20rem;
 }
 
-#projects #project-grid {
+#projects .grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
 
-#projects #project-grid .card {
+#projects .grid .card {
     width: 20rem;
     margin: 1rem 2rem;
 }
