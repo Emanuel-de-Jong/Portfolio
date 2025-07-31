@@ -17,16 +17,18 @@ function addProjectCards() {
                 </div>`;
         }
 
-        cardHtml += `
+        if (project.imgPaths.length > 1) {
+            cardHtml += `
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#${repoName}-carousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
+            <button type="button" class="carousel-control-prev" data-bs-target="#${repoName}-carousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#${repoName}-carousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+            <button type="button" class="carousel-control-next" data-bs-target="#${repoName}-carousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>`;
+        }
+        
+        cardHtml += `
         </div>
         <p class="date">${project.date.toISOString().slice(0, 10)}</p>
     </div>
