@@ -1,0 +1,17 @@
+let projects = [
+    new Project("Adventure Land Bot", "Adventure-Land-Bot", "Screenshots/Game 1.png",
+        "Hobby", ["JavaScript"],
+        "My take on automating a party for the game Adventure Land"),
+    new Project("Console VSRG Trainer", "Console-VSRG-Trainer", "Screenshots/In Game.png",
+        "Hobby", ["C#"],
+        "My first take on a rhythm game trainer. Meaning it gives you a random combination of notes and waits for you to press the right keys."),
+    new Project("Dont Tap Bot", "Dont-Tap-Bot", "Screenshots/Game.png",
+        "Hobby", ["Python"],
+        "Automates the game donttap.com"),
+    new Project("GoTrainer-HumanAI", "GoTrainer HumanAI", "imgs/screenshot.png",
+        "Hobby", ["JavaScript", "C#"],
+        "Description"),
+    new Project("Name", "RepoName", "Screenshots/",
+        "Hobby", ["JavaScript"],
+        "Description"),
+]
