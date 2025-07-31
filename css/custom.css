@@ -1,0 +1,45 @@
+body {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+p {
+    font-size: 1.4em;
+}
+
+#main-container {
+    padding: 0 5rem;
+}
+
+header h1 {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 3em;
+    font-weight: 700;
+}
+
+#about {
+    margin-top: 2rem;
+    margin-left: 12rem;
+    margin-right: 12rem;
+}
+
+#projects {
+    margin-top: 2rem;
+}
+
+#projects #filters #search {
+    width: 20rem;
+}
+
+#projects #project-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#projects #project-grid .card {
+    width: 20rem;
+    margin: 1rem 2rem;
+}
