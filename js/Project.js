@@ -1,12 +1,15 @@
 class Project {
-    constructor(name, repoName, imgPath,
+    constructor(name, repoName, imgPaths,
             madeFor, pLangs,
             description) {
-        imgPath = imgPath.replace(" ", "%20");
+        let correctedImgPaths = [];
+        for (let i = 0; i < imgPaths.length; i++) {
+            correctedImgPaths[i] = imgPaths[i].replace(" ", "%20");
+        }
 
         this.name = name;
         this.repoName = repoName;
-        this.imgPath = imgPath;
+        this.imgPaths = correctedImgPaths;
 
         this.madeFor = madeFor;
         this.pLangs = pLangs;
