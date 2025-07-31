@@ -5,7 +5,29 @@ function addProjectCards() {
         let cardHtml = `
 <div class="card" data-repo-name="${repoName}">
     <div class="thumbnail">
-        <img class="card-img-top" src="https://raw.githubusercontent.com/Emanuel-de-Jong/${repoName}/refs/heads/${project.branch}/${project.imgPaths[0]}">
+        <div id="${repoName}-carousel" class="carousel slide">
+            <div class="carousel-inner">`;
+
+        for (let i = 0; i < project.imgPaths.length; i++) {
+            const imgPath = project.imgPaths[i];
+            const activeClass = i === 0 ? "active" : "";
+            cardHtml += `
+                <div class="carousel-item ${activeClass}">
+                    <img src="https://raw.githubusercontent.com/Emanuel-de-Jong/${repoName}/refs/heads/${project.branch}/${imgPath}">
+                </div>`;
+        }
+
+        cardHtml += `
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#${repoName}-carousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#${repoName}-carousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
         <p class="date">${project.date.toISOString().slice(0, 10)}</p>
     </div>
     <div class="card-body">
@@ -14,7 +36,7 @@ function addProjectCards() {
         <div class="tags">
             <span class="badge text-bg-secondary">${project.madeFor}</span>`;
             
-        for (pLang of project.pLangs) {
+        for (const pLang of project.pLangs) {
             cardHtml += `<span class="badge text-bg-primary">${pLang}</span>`;
         }
 
@@ -30,9 +52,11 @@ function addProjectCards() {
 let cards = {}
 function addLinksToCards() {
     for (const [repoName, project] of Object.entries(projects)) {
-        let card = document.querySelector(`div[data-repo-name="${repoName}"]`);
-        card.addEventListener("click", (e) => {
-            window.open("https://github.com/Emanuel-de-Jong/" + e.currentTarget.dataset.repoName);
+        const card = document.querySelector(`div[data-repo-name="${repoName}"]`);
+
+        const cardBody = card.querySelector(".card-body");
+        cardBody.addEventListener("click", (e) => {
+            window.open("https://github.com/Emanuel-de-Jong/" + e.currentTarget.parentElement.dataset.repoName);
         });
 
         cards[repoName] = card;

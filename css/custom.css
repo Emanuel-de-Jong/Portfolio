@@ -57,23 +57,18 @@ header h1 {
     position: relative;
 }
 
-#projects .grid .card:hover {
-    background-color: #eee;
-    cursor: pointer;
-}
-
 #projects .grid .card p {
     font-size: 1em;
 }
 
 #projects .grid .card .thumbnail {
     position: relative;
+    background-color: #ddd;
 }
 
-#projects .grid .card-img-top {
+#projects .grid img {
     height: 12rem;
     object-fit: contain;
-    background-color: #ddd;
 }
 
 #projects .grid .card .date {
@@ -84,6 +79,11 @@ header h1 {
     margin: 0;
     background-color: rgba(0, 0, 0, 0.8);
     color: #eee;
+}
+
+#projects .grid .card-body:hover {
+    cursor: pointer;
+    background-color: #eee;
 }
 
 #projects .grid .card .description {
