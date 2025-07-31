@@ -39,14 +39,34 @@ function addLinksToCards() {
 addProjectCards();
 addLinksToCards();
 
-let pLangSelect = document.querySelector("#projects .filters .p-lang");
-pLangSelect.addEventListener("change", (e) => {
-    let filteredCards = {};
-    for (const [repoName, card] of Object.entries(cards)) {
-        if (projects[repoName].pLangs.includes(e.currentTarget.value)) {
-            filteredCards[repoName] = card;
+const search = document.querySelector("#projects .filters .search");
+search.addEventListener("keyup", (e) => {
+    const val = e.currentTarget.value.toLowerCase();
+    if (val === "") {
+        for (const card of Object.values(cards)) {
+            card.hidden = false;
+        }
+    } else {
+        for (const [repoName, card] of Object.entries(cards)) {
+            if (!projects[repoName].name.toLowerCase().includes(val)) {
+                card.hidden = true;
+            }
         }
     }
+});
 
-    console.log(filteredCards);
+const pLangSelect = document.querySelector("#projects .filters .p-lang");
+pLangSelect.addEventListener("change", (e) => {
+    const val = e.currentTarget.value;
+    if (val === "") {
+        for (const card of Object.values(cards)) {
+            card.hidden = false;
+        }
+    } else {
+        for (const [repoName, card] of Object.entries(cards)) {
+            if (!projects[repoName].pLangs.includes(val)) {
+                card.hidden = true;
+            }
+        }
+    }
 });
