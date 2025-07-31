@@ -1,5 +1,5 @@
 class Project {
-    constructor(name, repoName, branch, imgPaths,
+    constructor(name, branch, imgPaths,
             madeFor, pLangs,
             description) {
         let correctedImgPaths = [];
@@ -8,7 +8,6 @@ class Project {
         }
 
         this.name = name;
-        this.repoName = repoName;
         this.branch = branch;
         this.imgPaths = correctedImgPaths;
 
