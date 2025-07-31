@@ -35,6 +35,7 @@ header h1 {
 }
 
 #projects .grid {
+    margin-top: 0.8rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -43,4 +44,18 @@ header h1 {
 #projects .grid .card {
     width: 16rem;
     margin: 0.6rem 1rem;
+}
+
+#projects .grid .card-img-top {
+    height: 12rem;
+    object-fit: contain;
+    background-color: #ddd;
+}
+
+#projects .grid .card .description {
+    font-size: 1em;
+}
+
+#projects .grid .card .badge {
+    margin-right: 0.2rem;
 }
