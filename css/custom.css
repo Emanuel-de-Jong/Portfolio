@@ -44,6 +44,12 @@ header h1 {
 #projects .grid .card {
     width: 16rem;
     margin: 0.6rem 1rem;
+    position: relative;
+}
+
+#projects .grid .card:hover {
+    background-color: #eee;
+    cursor: pointer;
 }
 
 #projects .grid .card-img-top {
@@ -54,6 +60,12 @@ header h1 {
 
 #projects .grid .card .description {
     font-size: 1em;
+    margin-bottom: 2.2rem;
+}
+
+#projects .grid .card .tags {
+    position: absolute;
+    bottom: 0.4rem;
 }
 
 #projects .grid .card .badge {

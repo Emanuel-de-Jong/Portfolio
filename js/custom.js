@@ -3,7 +3,7 @@ let gridDiv = document.querySelector("#projects .grid");
 function addProjectCards() {
     for (project of projects) {
         let cardHtml = `
-<div class="card">
+<div class="card" data-repo-name="${project.repoName}">
     <img class="card-img-top" src="https://raw.githubusercontent.com/Emanuel-de-Jong/${project.repoName}/refs/heads/${project.branch}/${project.imgPaths[0]}">
     <div class="card-body">
         <h5 class="card-title">${project.name}</h5>
@@ -24,4 +24,14 @@ function addProjectCards() {
     }
 };
 
+function addLinksToCards() {
+    for (project of projects) {
+        let card = document.querySelector(`div[data-repo-name="${project.repoName}"]`);
+        card.addEventListener("click", (e) => {
+            window.open("https://github.com/Emanuel-de-Jong/" + e.currentTarget.dataset.repoName);
+        })
+    }
+};
+
 addProjectCards();
+addLinksToCards();
