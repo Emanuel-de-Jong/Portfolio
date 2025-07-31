@@ -10,11 +10,12 @@ p {
 
 #main-container {
     padding: 0 5rem;
+    background-color: aquamarine;
 }
 
 header h1 {
     text-align: center;
-    margin-top: 2rem;
+    padding-top: 2rem;
     font-size: 3em;
     font-weight: 700;
 }
@@ -40,6 +41,6 @@ header h1 {
 }
 
 #projects .grid .card {
-    width: 20rem;
-    margin: 1rem 2rem;
+    width: 16rem;
+    margin: 0.6rem 1rem;
 }
