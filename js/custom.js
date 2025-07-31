@@ -30,7 +30,7 @@ function addLinksToCards() {
         let card = document.querySelector(`div[data-repo-name="${repoName}"]`);
         card.addEventListener("click", (e) => {
             window.open("https://github.com/Emanuel-de-Jong/" + e.currentTarget.dataset.repoName);
-        })
+        });
 
         cards[repoName] = card;
     }
@@ -40,33 +40,35 @@ addProjectCards();
 addLinksToCards();
 
 const search = document.querySelector("#projects .filters .search");
-search.addEventListener("keyup", (e) => {
-    const val = e.currentTarget.value.toLowerCase();
-    if (val === "") {
-        for (const card of Object.values(cards)) {
-            card.hidden = false;
-        }
-    } else {
-        for (const [repoName, card] of Object.entries(cards)) {
-            if (!projects[repoName].name.toLowerCase().includes(val)) {
-                card.hidden = true;
-            }
-        }
-    }
-});
-
+const inspirationSelect = document.querySelector("#projects .filters .inspiration");
 const pLangSelect = document.querySelector("#projects .filters .p-lang");
-pLangSelect.addEventListener("change", (e) => {
-    const val = e.currentTarget.value;
-    if (val === "") {
-        for (const card of Object.values(cards)) {
-            card.hidden = false;
+function applyFilters() {
+    const searchValue = search.value.trim().toLowerCase();
+    const inspirationValue = inspirationSelect.value;
+    const pLangValue = pLangSelect.value;
+
+    for (const [repoName, card] of Object.entries(cards)) {
+        const project = projects[repoName];
+        
+        if (searchValue !== "" && !project.name.toLowerCase().includes(searchValue)) {
+            card.hidden = true;
+            continue;
         }
-    } else {
-        for (const [repoName, card] of Object.entries(cards)) {
-            if (!projects[repoName].pLangs.includes(val)) {
-                card.hidden = true;
-            }
+        
+        if (inspirationValue !== "" && project.madeFor !== inspirationValue) {
+            card.hidden = true;
+            continue;
         }
+        
+        if (pLangValue !== "" && !project.pLangs.includes(pLangValue)) {
+            card.hidden = true;
+            continue;
+        }
+        
+        card.hidden = false;
     }
-});
+};
+
+search.addEventListener("keyup", applyFilters);
+inspirationSelect.addEventListener("change", applyFilters);
+pLangSelect.addEventListener("change", applyFilters);
