@@ -1,5 +1,5 @@
 class Project {
-    constructor(name, branch, imgPaths,
+    constructor(name, branch, date, imgPaths,
             madeFor, pLangs,
             description) {
         let correctedImgPaths = [];
@@ -9,6 +9,7 @@ class Project {
 
         this.name = name;
         this.branch = branch;
+        this.date = new Date(date);
         this.imgPaths = correctedImgPaths;
 
         this.madeFor = madeFor;

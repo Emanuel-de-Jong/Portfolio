@@ -4,7 +4,10 @@ function addProjectCards() {
     for (const [repoName, project] of Object.entries(projects)) {
         let cardHtml = `
 <div class="card" data-repo-name="${repoName}">
-    <img class="card-img-top" src="https://raw.githubusercontent.com/Emanuel-de-Jong/${repoName}/refs/heads/${project.branch}/${project.imgPaths[0]}">
+    <div class="thumbnail">
+        <img class="card-img-top" src="https://raw.githubusercontent.com/Emanuel-de-Jong/${repoName}/refs/heads/${project.branch}/${project.imgPaths[0]}">
+        <p class="date">${project.date.toISOString().slice(0, 10)}</p>
+    </div>
     <div class="card-body">
         <h5 class="card-title">${project.name}</h5>
         <p class="description">${project.description}</p>

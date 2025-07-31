@@ -33,6 +33,7 @@ header h1 {
 #projects .filters {
     display: flex;
     justify-content: space-around;
+    align-items: flex-end;
 }
 
 #projects .filters .search {
@@ -61,14 +62,31 @@ header h1 {
     cursor: pointer;
 }
 
+#projects .grid .card p {
+    font-size: 1em;
+}
+
+#projects .grid .card .thumbnail {
+    position: relative;
+}
+
 #projects .grid .card-img-top {
     height: 12rem;
     object-fit: contain;
     background-color: #ddd;
 }
 
+#projects .grid .card .date {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0.2rem 0.4rem;
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #eee;
+}
+
 #projects .grid .card .description {
-    font-size: 1em;
     margin-bottom: 2.2rem;
 }
 

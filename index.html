@@ -33,11 +33,20 @@
                         <option>ROC</option>
                     </select>
                     <select class="p-lang form-select">
-                        <option value="">Programming Language</option>
+                        <option value="">Programming language</option>
                         <option>C#</option>
                         <option>Python</option>
                         <option>JS</option>
                     </select>
+                    <div>
+                        <label class="form-label">Order by</label>
+                        <select class="order-by form-select">
+                            <option value="nameAsc">Name (A-Z)</option>
+                            <option value="nameDesc">Name (Z-A)</option>
+                            <option value="dateDesc" selected>Newest</option>
+                            <option value="dateAsc">Oldest</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="grid"></div>
             </section>
