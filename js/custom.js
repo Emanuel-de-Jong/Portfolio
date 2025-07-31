@@ -17,9 +17,10 @@ function addProjectCards() {
                 </div>`;
         }
 
+        cardHtml += `</div>`;
+
         if (project.imgPaths.length > 1) {
             cardHtml += `
-            </div>
             <button type="button" class="carousel-control-prev" data-bs-target="#${repoName}-carousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon"></span>
             </button>
