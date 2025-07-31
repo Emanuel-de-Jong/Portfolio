@@ -43,6 +43,10 @@ let pLangSelect = document.querySelector("#projects .filters .p-lang");
 pLangSelect.addEventListener("change", (e) => {
     let filteredCards = {};
     for (const [repoName, card] of Object.entries(cards)) {
-
+        if (projects[repoName].pLangs.includes(e.currentTarget.value)) {
+            filteredCards[repoName] = card;
+        }
     }
+
+    console.log(filteredCards);
 });
