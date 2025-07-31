@@ -39,8 +39,34 @@ function addLinksToCards() {
     }
 };
 
-addProjectCards();
-addLinksToCards();
+const orderBySelect = document.querySelector("#projects .filters .order-by");
+function orderGrid() {
+    const orderBy = orderBySelect.value;
+    const cardArray = Object.values(cards);
+    
+    cardArray.sort((a, b) => {
+        const projectA = projects[a.dataset.repoName];
+        const projectB = projects[b.dataset.repoName];
+        
+        switch (orderBy) {
+            case "nameAsc":
+                return projectA.name.localeCompare(projectB.name);
+            case "nameDesc":
+                return projectB.name.localeCompare(projectA.name);
+            case "dateDesc":
+                return projectB.date - projectA.date;
+            case "dateAsc":
+                return projectA.date - projectB.date;
+            default:
+                return 0;
+        }
+    });
+    
+    gridDiv.innerHTML = '';
+    cardArray.forEach(card => {
+        gridDiv.appendChild(card);
+    });
+}
 
 const search = document.querySelector("#projects .filters .search");
 const inspirationSelect = document.querySelector("#projects .filters .inspiration");
@@ -72,6 +98,11 @@ function applyFilters() {
     }
 };
 
+orderBySelect.addEventListener("change", orderGrid);
 search.addEventListener("keyup", applyFilters);
 inspirationSelect.addEventListener("change", applyFilters);
 pLangSelect.addEventListener("change", applyFilters);
+
+addProjectCards();
+addLinksToCards();
+orderGrid();
