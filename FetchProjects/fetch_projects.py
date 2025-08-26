@@ -21,7 +21,11 @@ class Project:
 
 def fetch_projects():
     projects = repos_to_projects()
-    projects_to_js(projects)
+    js = projects_to_js(projects)
+    with open("../Website/js/projects.js", "w") as f:
+        f.write(js)
+    
+    print("Done!")
 
 def repos_to_projects():
     projects = []
@@ -38,8 +42,9 @@ def repos_to_projects():
             if github_page == None:
                 continue
 
+            print(f"=== {repo_name} ===")
             project = Project(repo_name)
-            # set_data_from_github_page(project, github_page)
+            set_data_from_github_page(project, github_page)
             set_data_from_local_clone(project, repo_path)
 
             projects.append(project)
@@ -66,6 +71,7 @@ def set_data_from_github_page(project, github_page):
     
     html_langs_header = soup.find('h2', string='Languages')
     if not html_langs_header:
+        print("No 'Languages' header in the HTML.")
         return
     
     html_langs = html_langs_header.find_next('ul')
@@ -76,6 +82,9 @@ def set_data_from_github_page(project, github_page):
 
         lang_name = html_lang.find_next('span').text.strip()
         project.p_langs.append(lang_name)
+    
+    if len(project.p_langs) == 0:
+        print("Could not extract languages from the HTML.")
 
 def set_data_from_local_clone(project, repo_path):
     set_screenshot_filenames(project, repo_path)
@@ -85,15 +94,18 @@ def set_data_from_local_clone(project, repo_path):
 def set_screenshot_filenames(project, repo_path):
     screenshots_path = os.path.join(repo_path, "Screenshots")
     if not os.path.exists(screenshots_path):
+        print("No 'Screenshots' directory.")
         return
     
     for filename in os.listdir(screenshots_path):
         if filename.lower().endswith('.png'):
             project.img_filenames.append(filename)
+    
+    if len(project.img_filenames) == 0:
+        print("No PNGs in the 'Screenshots' directory.")
 
 def set_main_branch_name(project, repo_path):
     git_dir_path = os.path.join(repo_path, ".git")
-    print(git_dir_path)
     try:
         remote_show_proc = subprocess.run(
             ['git', '--git-dir', git_dir_path, 'remote', 'show', 'origin'],
@@ -104,14 +116,18 @@ def set_main_branch_name(project, repo_path):
         remote_show_output = remote_show_proc.stdout
         match = re.search(r'^\s*HEAD branch:\s*(\S+)', remote_show_output, re.MULTILINE)
         
-        if match:
-            project.branch = match.group(1)
+        if not match:
+            print("Could not extract the branch name.")
+            return
+
+        project.branch = match.group(1)
     except Exception as e:
         print(e)
 
 def set_data_from_readme(project, repo_path):
     readme_path = os.path.join(repo_path, "README.md")
     if not os.path.exists(readme_path):
+        print("No 'README.md' file.")
         return
     
     with open(readme_path, 'r', encoding='utf-8') as f:
@@ -119,11 +135,16 @@ def set_data_from_readme(project, repo_path):
     
     project.name = readme.split("\n")[0].replace("#", "").strip()
 
-    project.description = readme.split("\n")[1].strip()
+    description = readme.split("\n")[1].strip()
     if not any(description.endswith(term) for term in ['.', '!', '?']):
         last_terminator = max(description.rfind('.'), description.rfind('!'), description.rfind('?'))
         if last_terminator != -1:
             description = description[:last_terminator + 1]
+    
+    # Change markdown link syntax `[text](url)`` into just the text
+    description = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', description)
+
+    project.description = description
 
     active_date_range = readme.split("**Active Development:**")[1].split("<br>")[0].strip()
     project.active_date_start, project.active_date_end = active_date_range.split(" - ")
@@ -139,9 +160,7 @@ def projects_to_js(projects):
         if i != len(projects):
             js += ","
     js += "\n};\n"
-
-    with open("../Website/js/projects.js", "w") as f:
-        f.write(js)
+    return js
 
 def project_to_js(project):
     made_for = "Hobby"
