@@ -1,36 +1,59 @@
+import os
+
 class Project:
-    def __init__(self, repo_name, name, branch, \
-                 active_date_start, active_date_end, last_change_date, \
-                 description, \
-                 img_names, p_langs):
+    def __init__(self, repo_name):
         self.repo_name = repo_name
-        self.name = name
-        self.branch = branch
+        self.name = ""
+        self.branch = ""
 
-        self.active_date_start = active_date_start
-        self.active_date_end = active_date_end
-        self.last_change_date = last_change_date
+        self.active_date_start = ""
+        self.active_date_end = ""
+        self.last_change_date = ""
 
-        self.description = description
+        self.description = ""
 
-        self.img_names = img_names
-        self.p_langs = p_langs
+        self.img_names = []
+        self.p_langs = []
 
 def fetch_projects():
-    projects = [
-        Project("Adventure-Land-Bot", "Adventure Land Bot", "master",
-            "2019-12-17", "2019-12-18", "2019-12-19",
-            "My take on automating a party for the game Adventure Land",
-            ["1-Game", "2-Game"],
-            ["JS"]),
-        Project("Console-VSRG-Trainer", "Console VSRG Trainer", "master",
-            "2019-02-15", "2019-02-17", "2019-02-17",
-            "My first take on a rhythm game trainer. Meaning it gives you a random combination of notes and waits for you to press the right keys.",
-            ["1-Loading_Screen", "2-In_Game"],
-            ["C#"])
-    ]
-
+    projects = projects_from_local_repos()
     projects_to_js(projects)
+
+def projects_from_local_repos():
+    projects = []
+
+    repos_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    for repo_name in os.listdir(repos_path):
+        repo_path = os.path.join(repos_path, repo_name)
+        if os.path.isdir(repo_path):
+            if not os.path.exists(os.path.join(repo_path, ".git")):
+                continue
+
+            github_page = get_github_page(repo_name)
+            # Not a GitHub repo or private
+            if github_page == None:
+                continue
+
+            project = Project(repo_name)
+            get_data_from_github_page(project, github_page)
+            get_data_from_readme(project, repo_path)
+
+            projects.append(project)
+
+    return projects
+
+def get_github_page(repo_name):
+    url = f"https://github.com/Emanuel-de-Jong/{repo_name}"
+
+    github_page = ""
+
+    return github_page
+
+def get_data_from_github_page(project, github_page):
+    pass
+
+def get_data_from_readme(project, repo_path):
+    pass
 
 def projects_to_js(projects):
     js = "let projects = {"
