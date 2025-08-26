@@ -66,7 +66,7 @@ def repos_to_projects():
                 continue
 
             github_page = get_github_page(repo_name)
-            # Not a GitHub repo or not public
+            # Not a GitHub repo or not public.
             if github_page == None:
                 continue
 
@@ -180,10 +180,10 @@ def set_data_from_readme(project, repo_path):
 
     description = readme.split("\n")[1].strip().replace("`", "")
     
-    # Change markdown link syntax `[text](url)`` into just the text
+    # Change markdown link syntax `[text](url)`` into just the text.
     description = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', description)
 
-    # Max 220 characters
+    # Max 220 characters.
     description = description[:220]
 
     if not any(description.endswith(term) for term in ['.', '!', '?']):

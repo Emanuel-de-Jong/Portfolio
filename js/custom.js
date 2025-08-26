@@ -92,6 +92,10 @@ function orderGrid() {
                 return projectB.activeDateStart - projectA.activeDateStart;
             case "dateAsc":
                 return projectA.activeDateStart - projectB.activeDateStart;
+            case "workDaysAsc":
+                return projectA.workDays > projectB.workDays;
+            case "workDaysDesc":
+                return projectB.workDays > projectA.workDays;
             default:
                 return 0;
         }
