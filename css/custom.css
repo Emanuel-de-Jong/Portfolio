@@ -82,6 +82,10 @@ header h1 {
     border-radius: 0.325rem;
 }
 
+#projects .grid .card-body {
+    border-top: 1px solid #dee2e6;
+}
+
 #projects .grid .card-body:hover {
     cursor: pointer;
     background-color: #eee;

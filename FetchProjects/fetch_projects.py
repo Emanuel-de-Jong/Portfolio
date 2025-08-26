@@ -178,7 +178,12 @@ def set_data_from_readme(project, repo_path):
     
     project.name = readme.split("\n")[0].replace("#", "").strip()
 
-    description = readme.split("\n")[1].strip().replace("`", "")
+    description_line_index = 1
+    if (project.made_for == "Saxion"):
+        description_line_index = 3
+
+    description = readme.split("\n")[description_line_index]
+    description = description.strip().replace("`", "")
     
     # Change markdown link syntax `[text](url)`` into just the text.
     description = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', description)
