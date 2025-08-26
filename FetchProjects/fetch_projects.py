@@ -123,7 +123,7 @@ def set_data_from_github_page(project, github_page):
             if lang_percentage < 10:
                 continue
 
-            lang_name = html_lang.find_next('span').text.strip()
+            lang_name = html_lang.find('span', class_='color-fg-default').text.strip()
             project.p_langs.append(lang_name)
         
         if len(project.p_langs) == 0:

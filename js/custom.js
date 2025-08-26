@@ -8,8 +8,9 @@ function addProjectCards() {
         <div id="${repoName}-carousel" class="carousel slide">
             <div class="carousel-inner">`;
 
-        for (let i = 0; i < project.imgPaths.length; i++) {
-            const imgPath = project.imgPaths[i];
+        const imgPaths = project.imgPaths;
+        for (let i = 0; i < imgPaths.length; i++) {
+            const imgPath = imgPaths[i];
             const activeClass = i === 0 ? "active" : "";
             cardHtml += `
                 <div class="carousel-item ${activeClass}">
@@ -17,9 +18,16 @@ function addProjectCards() {
                 </div>`;
         }
 
+        if (imgPaths.length == 0) {
+            cardHtml += `
+                <div class="carousel-item active">
+                    <img src="assets/imgs/No-Image.png">
+                </div>`;
+        }
+
         cardHtml += `</div>`;
 
-        if (project.imgPaths.length > 1) {
+        if (imgPaths.length > 1) {
             cardHtml += `
             <button type="button" class="carousel-control-prev" data-bs-target="#${repoName}-carousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon"></span>
