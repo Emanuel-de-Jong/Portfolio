@@ -83,22 +83,29 @@ function orderGrid() {
         const projectA = projects[a.dataset.repoName];
         const projectB = projects[b.dataset.repoName];
         
+        // nameAsc as fallback.
+        const fallback = projectA.name.localeCompare(projectB.name);
+        
+        let diff = 0;
         switch (orderBy) {
-            case "nameAsc":
-                return projectA.name.localeCompare(projectB.name);
             case "nameDesc":
-                return projectB.name.localeCompare(projectA.name);
+                diff = projectB.name.localeCompare(projectA.name);
+                break;
             case "dateDesc":
-                return projectB.activeDateStart - projectA.activeDateStart;
+                diff = projectB.activeDateStart - projectA.activeDateStart;
+                break;
             case "dateAsc":
-                return projectA.activeDateStart - projectB.activeDateStart;
+                diff = projectA.activeDateStart - projectB.activeDateStart;
+                break;
             case "workDaysAsc":
-                return projectA.workDays > projectB.workDays;
+                diff = projectA.workDays - projectB.workDays;
+                break;
             case "workDaysDesc":
-                return projectB.workDays > projectA.workDays;
-            default:
-                return 0;
+                diff = projectB.workDays - projectA.workDays;
+                break;
         }
+
+        return diff != 0 ? diff : fallback;
     });
     
     gridDiv.innerHTML = '';
