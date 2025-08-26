@@ -1,5 +1,7 @@
 import os
+import re
 import requests
+import subprocess
 from bs4 import BeautifulSoup
 
 class Project:
@@ -18,10 +20,10 @@ class Project:
         self.p_langs = []
 
 def fetch_projects():
-    projects = projects_from_local_repos()
+    projects = repos_to_projects()
     projects_to_js(projects)
 
-def projects_from_local_repos():
+def repos_to_projects():
     projects = []
 
     repos_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -38,12 +40,9 @@ def projects_from_local_repos():
 
             project = Project(repo_name)
             # get_data_from_github_page(project, github_page)
-            get_data_from_readme(project, repo_path)
-            get_screenshot_filenames(project, repo_path)
+            get_data_from_local_clone(project, repo_path)
 
             projects.append(project)
-
-            break
 
     return projects
 
@@ -57,8 +56,8 @@ def get_github_page(repo_name):
             html = response.text
             if ">Public</span>" in html:
                 github_page = html
-    except Exception as ex:
-        print(ex)
+    except Exception as e:
+        print(e)
 
     return github_page
 
@@ -78,6 +77,38 @@ def get_data_from_github_page(project, github_page):
         lang_name = html_lang.find_next('span').text.strip()
         project.p_langs.append(lang_name)
 
+def get_data_from_local_clone(project, repo_path):
+    get_screenshot_filenames(project, repo_path)
+    get_main_branch_name(project, repo_path)
+    get_data_from_readme(project, repo_path)
+
+def get_screenshot_filenames(project, repo_path):
+    screenshots_path = os.path.join(repo_path, "Screenshots")
+    if not os.path.exists(screenshots_path):
+        return
+    
+    for filename in os.listdir(screenshots_path):
+        if filename.lower().endswith('.png'):
+            project.img_filenames.append(filename)
+
+def get_main_branch_name(project, repo_path):
+    git_dir_path = os.path.join(repo_path, ".git")
+    print(git_dir_path)
+    try:
+        remote_show_proc = subprocess.run(
+            ['git', '--git-dir', git_dir_path, 'remote', 'show', 'origin'],
+            capture_output=True,
+            text=True,
+            check=True)
+        
+        remote_show_output = remote_show_proc.stdout
+        match = re.search(r'^\s*HEAD branch:\s*(\S+)', remote_show_output, re.MULTILINE)
+        
+        if match:
+            project.branch = match.group(1)
+    except Exception as e:
+        print(e)
+
 def get_data_from_readme(project, repo_path):
     readme_path = os.path.join(repo_path, "README.md")
     if not os.path.exists(readme_path):
@@ -88,14 +119,15 @@ def get_data_from_readme(project, repo_path):
     
     project.name = readme.split("\n")[0].replace("#", "").strip()
 
-def get_screenshot_filenames(project, repo_path):
-    screenshots_path = os.path.join(repo_path, "Screenshots")
-    if not os.path.exists(screenshots_path):
-        return
-    
-    for filename in os.listdir(screenshots_path):
-        if filename.lower().endswith('.png'):
-            project.img_filenames.append(filename)
+    project.description = readme.split("\n")[1].strip()
+    if not project.description.endswith("."):
+        sentences = project.description.split(".")[:-1]
+        project.description = ".".join(sentences)
+
+    active_date_range = readme.split("**Active Development:**")[1].split("<br>")[0].strip()
+    project.active_date_start, project.active_date_end = active_date_range.split(" - ")
+
+    project.last_change_date = readme.split("**Last Change:**")[1].split("<br>")[0].strip()
 
 def projects_to_js(projects):
     js = "let projects = {"
