@@ -62,7 +62,6 @@ header h1 {
 }
 
 #projects .grid .card .thumbnail {
-    position: relative;
     background-color: #ddd;
 }
 
@@ -81,16 +80,6 @@ header h1 {
     width: 1.6rem;
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 0.325rem;
-}
-
-#projects .grid .card .date {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 0.2rem 0.4rem;
-    margin: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: #eee;
 }
 
 #projects .grid .card-body:hover {

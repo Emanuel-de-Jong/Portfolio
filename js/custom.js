@@ -39,7 +39,6 @@ function addProjectCards() {
         
         cardHtml += `
         </div>
-        <p class="date">${project.activeDateStart.toISOString().slice(0, 10)}</p>
     </div>
     <div class="card-body">
         <h5 class="card-title">${project.name}</h5>
