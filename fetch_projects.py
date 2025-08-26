@@ -1,4 +1,5 @@
 import os
+import requests
 
 class Project:
     def __init__(self, repo_name):
@@ -30,7 +31,7 @@ def projects_from_local_repos():
                 continue
 
             github_page = get_github_page(repo_name)
-            # Not a GitHub repo or private
+            # Not a GitHub repo or not public
             if github_page == None:
                 continue
 
@@ -40,17 +41,32 @@ def projects_from_local_repos():
 
             projects.append(project)
 
+            break
+
     return projects
 
 def get_github_page(repo_name):
-    url = f"https://github.com/Emanuel-de-Jong/{repo_name}"
+    github_page = None
 
-    github_page = ""
+    url = f"https://github.com/Emanuel-de-Jong/{repo_name}"
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            html = response.text
+            if ">Public</span>" in html:
+                github_page = html
+    except Exception as ex:
+        print(ex)
 
     return github_page
 
 def get_data_from_github_page(project, github_page):
-    pass
+    html_langs = github_page.split(">Languages</h2>")[1].split("</turbo-frame>")[0]
+    html_langs = html_langs.strip().replace("\n", "").replace("  ", "").replace("\t", "")
+
+    for html_lang in html_langs.split("<li"):
+        lang_percentage = html_lang.split("%</span")[0].split("<span>")[-1]
+        print(lang_percentage)
 
 def get_data_from_readme(project, repo_path):
     pass
