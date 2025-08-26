@@ -22,7 +22,7 @@ class Project:
 def fetch_projects():
     projects = repos_to_projects()
     js = projects_to_js(projects)
-    with open("../Website/js/projects.js", "w") as f:
+    with open("../js/projects.js", "w") as f:
         f.write(js)
     
     print("Done!")
