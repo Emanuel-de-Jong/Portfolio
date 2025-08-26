@@ -39,8 +39,8 @@ def repos_to_projects():
                 continue
 
             project = Project(repo_name)
-            # get_data_from_github_page(project, github_page)
-            get_data_from_local_clone(project, repo_path)
+            # set_data_from_github_page(project, github_page)
+            set_data_from_local_clone(project, repo_path)
 
             projects.append(project)
 
@@ -61,7 +61,7 @@ def get_github_page(repo_name):
 
     return github_page
 
-def get_data_from_github_page(project, github_page):
+def set_data_from_github_page(project, github_page):
     soup = BeautifulSoup(github_page, 'html.parser')
     
     html_langs_header = soup.find('h2', string='Languages')
@@ -77,12 +77,12 @@ def get_data_from_github_page(project, github_page):
         lang_name = html_lang.find_next('span').text.strip()
         project.p_langs.append(lang_name)
 
-def get_data_from_local_clone(project, repo_path):
-    get_screenshot_filenames(project, repo_path)
-    get_main_branch_name(project, repo_path)
-    get_data_from_readme(project, repo_path)
+def set_data_from_local_clone(project, repo_path):
+    set_screenshot_filenames(project, repo_path)
+    set_main_branch_name(project, repo_path)
+    set_data_from_readme(project, repo_path)
 
-def get_screenshot_filenames(project, repo_path):
+def set_screenshot_filenames(project, repo_path):
     screenshots_path = os.path.join(repo_path, "Screenshots")
     if not os.path.exists(screenshots_path):
         return
@@ -91,7 +91,7 @@ def get_screenshot_filenames(project, repo_path):
         if filename.lower().endswith('.png'):
             project.img_filenames.append(filename)
 
-def get_main_branch_name(project, repo_path):
+def set_main_branch_name(project, repo_path):
     git_dir_path = os.path.join(repo_path, ".git")
     print(git_dir_path)
     try:
@@ -109,7 +109,7 @@ def get_main_branch_name(project, repo_path):
     except Exception as e:
         print(e)
 
-def get_data_from_readme(project, repo_path):
+def set_data_from_readme(project, repo_path):
     readme_path = os.path.join(repo_path, "README.md")
     if not os.path.exists(readme_path):
         return
@@ -120,9 +120,10 @@ def get_data_from_readme(project, repo_path):
     project.name = readme.split("\n")[0].replace("#", "").strip()
 
     project.description = readme.split("\n")[1].strip()
-    if not project.description.endswith("."):
-        sentences = project.description.split(".")[:-1]
-        project.description = ".".join(sentences)
+    if not any(description.endswith(term) for term in ['.', '!', '?']):
+        last_terminator = max(description.rfind('.'), description.rfind('!'), description.rfind('?'))
+        if last_terminator != -1:
+            description = description[:last_terminator + 1]
 
     active_date_range = readme.split("**Active Development:**")[1].split("<br>")[0].strip()
     project.active_date_start, project.active_date_end = active_date_range.split(" - ")
