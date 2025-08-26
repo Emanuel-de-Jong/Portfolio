@@ -1,5 +1,6 @@
 import os
 import requests
+from bs4 import BeautifulSoup
 
 class Project:
     def __init__(self, repo_name):
@@ -13,7 +14,7 @@ class Project:
 
         self.description = ""
 
-        self.img_names = []
+        self.img_filenames = []
         self.p_langs = []
 
 def fetch_projects():
@@ -36,8 +37,9 @@ def projects_from_local_repos():
                 continue
 
             project = Project(repo_name)
-            get_data_from_github_page(project, github_page)
+            # get_data_from_github_page(project, github_page)
             get_data_from_readme(project, repo_path)
+            get_screenshot_filenames(project, repo_path)
 
             projects.append(project)
 
@@ -61,15 +63,39 @@ def get_github_page(repo_name):
     return github_page
 
 def get_data_from_github_page(project, github_page):
-    html_langs = github_page.split(">Languages</h2>")[1].split("</turbo-frame>")[0]
-    html_langs = html_langs.strip().replace("\n", "").replace("  ", "").replace("\t", "")
+    soup = BeautifulSoup(github_page, 'html.parser')
+    
+    html_langs_header = soup.find('h2', string='Languages')
+    if not html_langs_header:
+        return
+    
+    html_langs = html_langs_header.find_next('ul')
+    for html_lang in html_langs.find_all('li'):
+        lang_percentage = float(html_lang.find('span', string=lambda t: t and '%' in t).text.strip('%'))
+        if lang_percentage < 10:
+            continue
 
-    for html_lang in html_langs.split("<li"):
-        lang_percentage = html_lang.split("%</span")[0].split("<span>")[-1]
-        print(lang_percentage)
+        lang_name = html_lang.find_next('span').text.strip()
+        project.p_langs.append(lang_name)
 
 def get_data_from_readme(project, repo_path):
-    pass
+    readme_path = os.path.join(repo_path, "README.md")
+    if not os.path.exists(readme_path):
+        return
+    
+    with open(readme_path, 'r', encoding='utf-8') as f:
+        readme = f.read().replace(("\r\n"), "\n").replace("\n\r", "\n")
+    
+    project.name = readme.split("\n")[0].replace("#", "").strip()
+
+def get_screenshot_filenames(project, repo_path):
+    screenshots_path = os.path.join(repo_path, "Screenshots")
+    if not os.path.exists(screenshots_path):
+        return
+    
+    for filename in os.listdir(screenshots_path):
+        if filename.lower().endswith('.png'):
+            project.img_filenames.append(filename)
 
 def projects_to_js(projects):
     js = "let projects = {"
@@ -98,13 +124,13 @@ def project_to_js(project):
     js += f",\n\t\t'{project.description}'"
 
     js += ",\n\t\t["
-    for i in range(len(project.img_names)):
-        img_name = project.img_names[i]
+    for i in range(len(project.img_filenames)):
+        img_name = project.img_filenames[i]
 
         if i != 0:
             js += ", "
         
-        js += f"'Screenshots/{img_name}.png'"
+        js += f"'Screenshots/{img_name}'"
     js += "]"
 
     js += ",\n\t\t["
