@@ -31,7 +31,7 @@ function addProjectCards() {
         
         cardHtml += `
         </div>
-        <p class="date">${project.date.toISOString().slice(0, 10)}</p>
+        <p class="date">${project.activeDateStart.toISOString().slice(0, 10)}</p>
     </div>
     <div class="card-body">
         <h5 class="card-title">${project.name}</h5>
@@ -81,9 +81,9 @@ function orderGrid() {
             case "nameDesc":
                 return projectB.name.localeCompare(projectA.name);
             case "dateDesc":
-                return projectB.date - projectA.date;
+                return projectB.activeDateStart - projectA.activeDateStart;
             case "dateAsc":
-                return projectA.date - projectB.date;
+                return projectA.activeDateStart - projectB.activeDateStart;
             default:
                 return 0;
         }

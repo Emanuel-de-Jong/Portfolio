@@ -1,13 +1,20 @@
 class Project {
-    constructor(name, branch, date, madeFor, description, imgPaths, pLangs) {
+    constructor(repoName, name, branch, madeFor,
+            activeDateStart, activeDateEnd, lastChangeDate,
+            description,
+            imgPaths, pLangs) {
+        this.repoName = repoName;
         this.name = name;
         this.branch = branch;
-        this.date = new Date(date);
-        this.imgPaths = imgPaths;
-
         this.madeFor = madeFor;
-        this.pLangs = pLangs;
+
+        this.activeDateStart = new Date(activeDateStart);
+        this.activeDateEnd = new Date(activeDateEnd);
+        this.lastChangeDate = new Date(lastChangeDate);
 
         this.description = description;
+
+        this.imgPaths = imgPaths;
+        this.pLangs = pLangs;
     }
 }

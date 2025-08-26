@@ -1,20 +1,30 @@
 class Project:
-    def __init__(self, repoName, name, branch, date, description, imgNames, pLangs):
+    def __init__(self, repoName, name, branch, \
+                 activeDateStart, activeDateEnd, lastChangeDate, \
+                 description, \
+                 imgNames, pLangs):
         self.repoName = repoName
         self.name = name
         self.branch = branch
-        self.date = date
+
+        self.activeDateStart = activeDateStart
+        self.activeDateEnd = activeDateEnd
+        self.lastChangeDate = lastChangeDate
+
         self.description = description
+
         self.imgNames = imgNames
         self.pLangs = pLangs
 
 def fetch_projects():
     projects = [
-        Project("Adventure-Land-Bot", "Adventure Land Bot", "master", "2019-12-17",
+        Project("Adventure-Land-Bot", "Adventure Land Bot", "master",
+            "2019-12-17", "2019-12-18", "2019-12-19",
             "My take on automating a party for the game Adventure Land",
-            ["1-Game.png", "2-Game.png"],
+            ["1-Game", "2-Game"],
             ["JS"]),
-        Project("Console-VSRG-Trainer", "Console VSRG Trainer", "master", "2019-02-15",
+        Project("Console-VSRG-Trainer", "Console VSRG Trainer", "master",
+            "2019-02-15", "2019-02-17", "2019-02-17",
             "My first take on a rhythm game trainer. Meaning it gives you a random combination of notes and waits for you to press the right keys.",
             ["1-Loading_Screen", "2-In_Game"],
             ["C#"])
@@ -30,7 +40,7 @@ def projects_to_js(projects):
 
         if i != len(projects):
             js += ","
-    js += "\t};\n"
+    js += "\n};\n"
 
     with open("js/projects.js", "w") as f:
         f.write(js)
@@ -44,7 +54,8 @@ def project_to_js(project):
     elif "Kunst-In-De-Etalage" in project.repoName:
         madeFor = "Internship"
 
-    js = f"\n\t'{project.repoName}': new Project('{project.name}', '{project.branch}', '{project.date}', '{madeFor}'"
+    js = f"\n\t'{project.repoName}': new Project('{project.repoName}', '{project.name}', '{project.branch}', '{madeFor}'"
+    js += f",\n\t\t'{project.activeDateStart}', '{project.activeDateEnd}', '{project.lastChangeDate}'"
     js += f",\n\t\t'{project.description}'"
 
     js += ",\n\t\t["
