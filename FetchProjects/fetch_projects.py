@@ -23,7 +23,7 @@ def fetch_projects():
 def projects_from_local_repos():
     projects = []
 
-    repos_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    repos_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     for repo_name in os.listdir(repos_path):
         repo_path = os.path.join(repos_path, repo_name)
         if os.path.isdir(repo_path):
@@ -81,7 +81,7 @@ def projects_to_js(projects):
             js += ","
     js += "\n};\n"
 
-    with open("js/projects.js", "w") as f:
+    with open("../Website/js/projects.js", "w") as f:
         f.write(js)
 
 def project_to_js(project):
