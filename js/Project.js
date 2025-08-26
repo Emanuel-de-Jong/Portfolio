@@ -1,16 +1,9 @@
 class Project {
-    constructor(name, branch, date, imgPaths,
-            madeFor, pLangs,
-            description) {
-        let correctedImgPaths = [];
-        for (let i = 0; i < imgPaths.length; i++) {
-            correctedImgPaths[i] = imgPaths[i].replace(" ", "%20");
-        }
-
+    constructor(name, branch, date, madeFor, description, imgPaths, pLangs) {
         this.name = name;
         this.branch = branch;
         this.date = new Date(date);
-        this.imgPaths = correctedImgPaths;
+        this.imgPaths = imgPaths;
 
         this.madeFor = madeFor;
         this.pLangs = pLangs;
