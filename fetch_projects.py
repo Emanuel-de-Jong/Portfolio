@@ -1,20 +1,20 @@
 class Project:
-    def __init__(self, repoName, name, branch, \
-                 activeDateStart, activeDateEnd, lastChangeDate, \
+    def __init__(self, repo_name, name, branch, \
+                 active_date_start, active_date_end, last_change_date, \
                  description, \
-                 imgNames, pLangs):
-        self.repoName = repoName
+                 img_names, p_langs):
+        self.repo_name = repo_name
         self.name = name
         self.branch = branch
 
-        self.activeDateStart = activeDateStart
-        self.activeDateEnd = activeDateEnd
-        self.lastChangeDate = lastChangeDate
+        self.active_date_start = active_date_start
+        self.active_date_end = active_date_end
+        self.last_change_date = last_change_date
 
         self.description = description
 
-        self.imgNames = imgNames
-        self.pLangs = pLangs
+        self.img_names = img_names
+        self.p_langs = p_langs
 
 def fetch_projects():
     projects = [
@@ -46,36 +46,36 @@ def projects_to_js(projects):
         f.write(js)
 
 def project_to_js(project):
-    madeFor = "Hobby"
-    if "Saxion" in project.repoName:
-        madeFor = "Saxion"
-    elif "ROC" in project.repoName:
-        madeFor = "ROC"
-    elif "Kunst-In-De-Etalage" in project.repoName:
-        madeFor = "Internship"
+    made_for = "Hobby"
+    if "Saxion" in project.repo_name:
+        made_for = "Saxion"
+    elif "ROC" in project.repo_name:
+        made_for = "ROC"
+    elif "Kunst-In-De-Etalage" in project.repo_name:
+        made_for = "Internship"
 
-    js = f"\n\t'{project.repoName}': new Project('{project.repoName}', '{project.name}', '{project.branch}', '{madeFor}'"
-    js += f",\n\t\t'{project.activeDateStart}', '{project.activeDateEnd}', '{project.lastChangeDate}'"
+    js = f"\n\t'{project.repo_name}': new Project('{project.repo_name}', '{project.name}', '{project.branch}', '{made_for}'"
+    js += f",\n\t\t'{project.active_date_start}', '{project.active_date_end}', '{project.last_change_date}'"
     js += f",\n\t\t'{project.description}'"
 
     js += ",\n\t\t["
-    for i in range(len(project.imgNames)):
-        imgName = project.imgNames[i]
+    for i in range(len(project.img_names)):
+        img_name = project.img_names[i]
 
         if i != 0:
             js += ", "
         
-        js += f"'Screenshots/{imgName}.png'"
+        js += f"'Screenshots/{img_name}.png'"
     js += "]"
 
     js += ",\n\t\t["
-    for i in range(len(project.pLangs)):
-        pLang = project.pLangs[i]
+    for i in range(len(project.p_langs)):
+        p_lang = project.p_langs[i]
 
         if i != 0:
             js += ", "
         
-        js += f"'{pLang}'"
+        js += f"'{p_lang}'"
     js += "]"
 
     js += ")"
