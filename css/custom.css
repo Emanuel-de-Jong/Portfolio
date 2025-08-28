@@ -30,6 +30,10 @@ header h1 {
     margin-top: 2rem;
 }
 
+#projects .project-count {
+    text-align: center;
+}
+
 #projects .filters {
     display: flex;
     justify-content: space-around;

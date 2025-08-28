@@ -141,7 +141,19 @@ function applyFilters() {
         
         card.hidden = false;
     }
+
+    updateProjectCount();
 };
+
+let visibleCountElement = document.getElementById("visible-count");
+let totalCountElement = document.getElementById("total-count");
+function updateProjectCount() {
+    const totalCount = Object.keys(cards).length;
+    const visibleCount = Object.values(cards).filter(card => !card.hidden).length;
+    
+    totalCountElement.textContent = totalCount;
+    visibleCountElement.textContent = visibleCount;
+}
 
 orderBySelect.addEventListener("change", orderGrid);
 search.addEventListener("keyup", applyFilters);
@@ -150,4 +162,5 @@ pLangSelect.addEventListener("change", applyFilters);
 
 addProjectCards();
 addLinksToCards();
+updateProjectCount();
 orderGrid();
