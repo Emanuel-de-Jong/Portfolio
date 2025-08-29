@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <!-- Libraries -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/tom-select.bootstrap5.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
     <link rel="stylesheet" href="css/breakpoints.css">
@@ -29,33 +30,30 @@
                     Showing <span id="visible-count">0</span> of <span id="total-count">0</span> projects
                 </div>
                 <div class="filters">
-                    <input type="text" class="search form-control" placeholder="Search...">
-                    <select class="inspiration form-select">
-                        <option value="">Inspiration</option>
+                    <input type="text" id="search" class="form-control" placeholder="Search...">
+                    <div id="skills">
+                        <input placeholder="Skills...">
+                    </div>
+                    <select id="inspiration" class="form-select">
+                        <option value="">Inspiration...</option>
                         <option>Hobby</option>
                         <option>Saxion</option>
                         <option>ROC</option>
                     </select>
-                    <select class="p-lang form-select">
-                        <option value="">Programming language</option>
-                        <option>C#</option>
-                        <option>Python</option>
-                        <option>JS</option>
-                    </select>
-                    <div>
-                        <label class="form-label">Order by</label>
-                        <div class="input-group">
-                            <select class="order-by form-select">
-                                <option value="name">Name</option>
-                                <option value="workDays" selected>Work days</option>
-                                <option value="lastChangeDate">Last updated</option>
-                                <option value="activeDateStart">Active development start</option>
-                                <option value="activeDateEnd">Active development end</option>
-                            </select>
-                            <span class="input-group-text" id="order-by-direction" data-direction="desc">
-                                <img class="icon" src="assets/icons/arrow_back_2_fill1_48px.svg" />
-                            </span>
-                        </div>
+                    <div id="order-by" class="input-group">
+                        <span id="order-by-title" class="input-group-text">
+                            Order by
+                        </span>
+                        <select id="order-by-value" class="form-select">
+                            <option value="name">Name</option>
+                            <option value="workDays" selected>Work days</option>
+                            <option value="lastChangeDate">Last updated</option>
+                            <option value="activeDateStart">Active development start</option>
+                            <option value="activeDateEnd">Active development end</option>
+                        </select>
+                        <span class="input-group-text" id="order-by-direction" data-direction="desc">
+                            <img class="icon" src="assets/icons/arrow_back_2_fill1_48px.svg" />
+                        </span>
                     </div>
                 </div>
                 <div class="grid"></div>
@@ -65,9 +63,10 @@
 
     <!-- Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <script src="js/tom-select.complete.min.js"></script>
     <!-- Custom JS -->
-     <script src="js/Project.js"></script>
-     <script src="js/projects.js"></script>
+    <script src="js/Project.js"></script>
+    <script src="js/projects.js"></script>
     <script src="js/custom.js"></script>
 </body>
 </html>

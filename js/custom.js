@@ -46,8 +46,8 @@ function addProjectCards() {
         <div class="tags">
             <span class="badge text-bg-secondary">${project.madeFor}</span>`;
             
-        for (const pLang of project.pLangs) {
-            cardHtml += `<span class="badge text-bg-primary">${pLang}</span>`;
+        for (const skill of project.skills) {
+            cardHtml += `<span class="badge text-bg-primary">${skill}</span>`;
         }
 
         cardHtml += `
@@ -73,6 +73,30 @@ function addLinksToCards() {
     }
 };
 
+let skillOptions = new Set();
+for (const project of Object.values(projects)) {
+    for (const skill of project.skills) {
+        skillOptions.add(skill);
+    }
+}
+skillOptions = Array.from(skillOptions).sort();
+
+let skillSelectSettings = {
+    options: [],
+    create: false,
+    plugins: {
+		remove_button:{
+			title:"Remove this skill",
+		}
+	},
+};
+
+for (const skill of skillOptions) {
+    skillSelectSettings["options"].push({ value: skill, text: skill });
+}
+
+const skillSelect = new TomSelect("#skills input", skillSelectSettings);
+
 const orderByDefaultDirections = {
     "name": "asc",
     "workDays": "desc",
@@ -80,8 +104,8 @@ const orderByDefaultDirections = {
     "activeDateStart": "desc",
     "activeDateEnd": "desc",
 };
-const orderBySelect = document.querySelector("#projects .filters .order-by");
-const orderByDirectionBtn = document.querySelector("#projects .filters #order-by-direction");
+const orderBySelect = document.getElementById("order-by-value");
+const orderByDirectionBtn = document.getElementById("order-by-direction");
 
 let lastOrderBy = "workDays"
 function orderGrid() {
@@ -140,13 +164,12 @@ function orderGrid() {
     });
 }
 
-const search = document.querySelector("#projects .filters .search");
-const inspirationSelect = document.querySelector("#projects .filters .inspiration");
-const pLangSelect = document.querySelector("#projects .filters .p-lang");
+const search = document.getElementById("search");
+const inspirationSelect = document.getElementById("inspiration");
 function applyFilters() {
     const searchValue = search.value.trim().toLowerCase();
     const inspirationValue = inspirationSelect.value;
-    const pLangValue = pLangSelect.value;
+    const skillValue = "";
 
     for (const [repoName, card] of Object.entries(cards)) {
         const project = projects[repoName];
@@ -163,7 +186,7 @@ function applyFilters() {
             continue;
         }
         
-        if (pLangValue !== "" && !project.pLangs.includes(pLangValue)) {
+        if (skillValue !== "" && !project.skills.includes(skillValue)) {
             card.hidden = true;
             continue;
         }
@@ -197,7 +220,6 @@ function toggleOrderByDirectionBtn() {
 orderBySelect.addEventListener("change", orderGrid);
 search.addEventListener("keyup", applyFilters);
 inspirationSelect.addEventListener("change", applyFilters);
-pLangSelect.addEventListener("change", applyFilters);
 orderByDirectionBtn.addEventListener("click", () => {
     toggleOrderByDirectionBtn();
     orderGrid();

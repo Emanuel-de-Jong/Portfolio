@@ -9,15 +9,6 @@ p {
     font-size: 1.4em;
 }
 
-#main-container {
-    width: 100%;
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #82ffd5;
-}
-
 header h1 {
     text-align: center;
     padding: 2rem 0;
@@ -25,6 +16,15 @@ header h1 {
     font-size: 2.6em;
     font-weight: 700;
     background-color: #59dfb2;
+}
+
+#main-container {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #82ffd5;
 }
 
 #about {
@@ -45,22 +45,50 @@ header h1 {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    flex-wrap: wrap;
     margin-left: 1rem;
     margin-right: 1rem;
 }
 
-#projects .filters .search {
-    width: 20rem;
+
+#projects .filters > div,
+#projects .filters > select,
+#projects .filters > input {
+    flex-grow: 1;
+    margin-top: 0.75rem;
+    max-height: 2.7rem;
+    max-width: 100%;
 }
 
-#projects .filters select {
-    width: 15rem;
+#projects .filters #search,
+#projects .filters select,
+#projects .filters #skills .ts-control,
+#projects .filters #order-by span {
+    border: 2px solid #59dfb2;
+    border-radius: 0.325rem;
+}
+
+#projects .filters #order-by-title {
+    background-color: #e9e9e9;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-right: 0 !important;
+    user-select: none;
+    padding-left: 0.4rem;
+    padding-right: 0.6rem;
+}
+
+#projects .filters #order-by-value {
+    border-radius: 0 !important;
 }
 
 #projects .filters #order-by-direction {
     padding: 0 0.4rem;
-    background-color: #dfdfdf;
+    background-color: #e9e9e9;
     cursor: pointer;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-left: 0 !important;
 }
 
 #projects .filters #order-by-direction:hover {
@@ -88,9 +116,11 @@ header h1 {
 }
 
 #projects .grid .card {
+    position: relative;
     width: 16rem;
     margin: 0.6rem 1rem;
-    position: relative;
+    border: 2px solid #59dfb2;
+    border-radius: 0.325rem;
 }
 
 #projects .grid .card p {
@@ -119,7 +149,7 @@ header h1 {
 }
 
 #projects .grid .card-body {
-    border-top: 1px solid #dee2e6;
+    border-top: 2px solid #59dfb2;
 }
 
 #projects .grid .card-body:hover {

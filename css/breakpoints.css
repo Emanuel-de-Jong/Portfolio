@@ -1,35 +1,51 @@
 @media (min-width: 768px) {
-  #main-container {
-    max-width: 720px;
-  }
+    #main-container {
+        max-width: 720px;
+    }
+
+    #projects .filters > div,
+    #projects .filters > select,
+    #projects .filters > input {
+        max-width: 47%;
+    }
 }
 
 @media (min-width: 992px) {
-  #main-container {
-    max-width: 960px;
-    padding-left: 30px;
-    padding-right: 30px;
-  }
+    #main-container {
+        max-width: 960px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
 }
 
 @media (min-width: 1200px) {
-  #main-container {
-    max-width: 1140px;
-    padding-left: 40px;
-    padding-right: 40px;
-  }
+    #main-container {
+        max-width: 1140px;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
 }
 
 @media (min-width: 1400px) {
-  #main-container {
-    max-width: 1320px;
-    padding-left: 55px;
-    padding-right: 55px;
-  }
+    #main-container {
+        max-width: 1320px;
+        padding-left: 55px;
+        padding-right: 55px;
+    }
+
+    #projects .filters > div,
+    #projects .filters > select,
+    #projects .filters > input {
+        max-width: 23%;
+    }
+
+    #projects .filters #order-by {
+        max-width: 27%;
+    }
 }
 
 @media (min-width: 1600px) {
-  #main-container {
-    max-width: 1500px;
-  }
+    #main-container {
+        max-width: 1500px;
+    }
 }

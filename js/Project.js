@@ -2,7 +2,7 @@ class Project {
     constructor(repoName, name, branch, madeFor,
             activeDateStart, activeDateEnd, lastChangeDate,
             description,
-            imgPaths, pLangs) {
+            imgPaths, skills) {
         this.repoName = repoName;
         this.name = name;
         this.branch = branch;
@@ -17,7 +17,7 @@ class Project {
         this.description = description;
 
         this.imgPaths = imgPaths;
-        this.pLangs = pLangs;
+        this.skills = skills;
     }
 
     calcWorkDays() {
