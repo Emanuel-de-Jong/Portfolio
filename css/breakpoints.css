@@ -39,6 +39,10 @@
         max-width: 23%;
     }
 
+    #projects .filters #inspiration {
+        max-width: 19%;
+    }
+
     #projects .filters #order-by {
         max-width: 27%;
     }

@@ -37,25 +37,19 @@ header h1 {
     margin-top: 2rem;
 }
 
-#projects .project-count {
-    text-align: center;
-}
-
 #projects .filters {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     flex-wrap: wrap;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin-left: 0.6rem;
+    margin-right: 0.6rem;
 }
-
 
 #projects .filters > div,
 #projects .filters > select,
 #projects .filters > input {
     flex-grow: 1;
-    margin-top: 0.75rem;
     max-height: 2.7rem;
     max-width: 100%;
 }
@@ -108,8 +102,12 @@ header h1 {
     transform: rotate(-90deg);
 }
 
+#projects .project-count {
+    margin-top: 0.875rem;
+    text-align: center;
+}
+
 #projects .grid {
-    margin-top: 0.8rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -118,9 +116,9 @@ header h1 {
 #projects .grid .card {
     position: relative;
     width: 16rem;
-    margin: 0.6rem 1rem;
+    margin: 0 0.6rem 1.2rem 0.6rem;
     border: 2px solid #59dfb2;
-    border-radius: 0.325rem;
+    border-radius: 0;
 }
 
 #projects .grid .card p {
@@ -146,6 +144,10 @@ header h1 {
     width: 1.6rem;
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 0.325rem;
+}
+
+#projects .grid .card .carousel button span:hover {
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 #projects .grid .card-body {
