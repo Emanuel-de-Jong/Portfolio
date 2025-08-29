@@ -46,7 +46,8 @@ function addProjectCards() {
         <div class="tags">
             <span class="badge text-bg-secondary">${project.madeFor}</span>`;
             
-        for (const skill of project.skills) {
+        for (let skill of project.skills) {
+            skill = skill.replaceAll("-", " ")
             cardHtml += `<span class="badge text-bg-primary">${skill}</span>`;
         }
 
@@ -73,6 +74,8 @@ function addLinksToCards() {
     }
 };
 
+let skills = [];
+
 let skillOptions = new Set();
 for (const project of Object.values(projects)) {
     for (const skill of project.skills) {
@@ -89,10 +92,20 @@ let skillSelectSettings = {
 			title:"Remove this skill",
 		}
 	},
+    onChange: function(new_skills) {
+        if (new_skills === "") {
+            skills = [];
+        } else {
+            skills = new_skills.split(",");
+        }
+        
+        applyFilters();
+    },
 };
 
 for (const skill of skillOptions) {
-    skillSelectSettings["options"].push({ value: skill, text: skill });
+    const skill_formatted = skill.replaceAll("-", " ")
+    skillSelectSettings["options"].push({ value: skill, text: skill_formatted });
 }
 
 const skillSelect = new TomSelect("#skills input", skillSelectSettings);
@@ -169,7 +182,6 @@ const inspirationSelect = document.getElementById("inspiration");
 function applyFilters() {
     const searchValue = search.value.trim().toLowerCase();
     const inspirationValue = inspirationSelect.value;
-    const skillValue = "";
 
     for (const [repoName, card] of Object.entries(cards)) {
         const project = projects[repoName];
@@ -186,9 +198,19 @@ function applyFilters() {
             continue;
         }
         
-        if (skillValue !== "" && !project.skills.includes(skillValue)) {
-            card.hidden = true;
-            continue;
+        if (skills.length > 0) {
+            let hasAllSkills = true;
+            for (const skill of skills) {
+                if (!project.skills.includes(skill)) {
+                    hasAllSkills = false;
+                    break;
+                }
+            }
+
+            if (!hasAllSkills) {
+                card.hidden = true;
+                continue;
+            }
         }
         
         card.hidden = false;
