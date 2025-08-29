@@ -120,10 +120,13 @@ def set_data_from_github_page(project, github_page):
         for html_lang in html_langs.find_all('li'):
             html_percentage = html_lang.find('span', string=lambda t: t and '%' in t)
             lang_percentage = float(html_percentage.text.strip('%').strip())
-            if lang_percentage < 10:
+            if lang_percentage < 1:
                 continue
 
             lang_name = html_lang.find('span', class_='color-fg-default').text.strip().replace(" ", "-")
+            if lang_name == "Other":
+                continue
+            
             project.p_langs.append(lang_name)
         
         if len(project.p_langs) == 0:
