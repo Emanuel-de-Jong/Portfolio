@@ -1,3 +1,9 @@
+@media (max-width: 420px) {
+    #projects .grid .card img {
+        height: 16rem;
+    }
+}
+
 @media (min-width: 768px) {
     #about {
         width: 500px;
@@ -11,6 +17,14 @@
     #projects .filters > select,
     #projects .filters > input {
         max-width: 47%;
+    }
+
+    #projects .grid .card {
+        width: 16rem;
+    }
+
+    #projects .grid .card img {
+        height: 12rem;
     }
 }
 
