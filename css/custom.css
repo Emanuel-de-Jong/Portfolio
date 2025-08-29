@@ -2,6 +2,7 @@ body {
     font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-weight: 400;
+    background-color: #d1fff0;
 }
 
 p {
@@ -9,21 +10,27 @@ p {
 }
 
 #main-container {
-    padding: 0 5rem;
-    background-color: aquamarine;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #82ffd5;
 }
 
 header h1 {
     text-align: center;
-    padding-top: 2rem;
-    font-size: 3em;
+    padding: 2rem 0;
+    margin: 0;
+    font-size: 2.6em;
     font-weight: 700;
+    background-color: #59dfb2;
 }
 
 #about {
-    margin-top: 2rem;
-    margin-left: 12rem;
-    margin-right: 12rem;
+    padding-top: 2rem;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 #projects {
@@ -36,8 +43,10 @@ header h1 {
 
 #projects .filters {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: flex-end;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 #projects .filters .search {
@@ -48,11 +57,34 @@ header h1 {
     width: 15rem;
 }
 
+#projects .filters #order-by-direction {
+    padding: 0 0.4rem;
+    background-color: #dfdfdf;
+    cursor: pointer;
+}
+
+#projects .filters #order-by-direction:hover {
+    background-color: #c0c0c0;
+}
+
+#projects .filters #order-by-direction .icon {
+    width: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+#projects .filters #order-by-direction[data-direction="asc"] .icon {
+    transform: rotate(90deg);
+}
+
+#projects .filters #order-by-direction[data-direction="desc"] .icon {
+    transform: rotate(-90deg);
+}
+
 #projects .grid {
     margin-top: 0.8rem;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 #projects .grid .card {

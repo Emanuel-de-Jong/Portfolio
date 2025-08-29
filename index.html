@@ -12,13 +12,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/breakpoints.css">
 </head>
 
 <body>
-    <div id="main-container" class="container-sm">
-        <header>
-            <h1>Emanuel de Jong</h1>
-        </header>
+    <header>
+        <h1>Emanuel de Jong</h1>
+    </header>
+    <div id="main-container">
         <main>
             <section id="about">
                 <p>This is a showcase of the various projects I have worked on. It includes hobby projects as well as projects for education.</p>
@@ -43,14 +44,18 @@
                     </select>
                     <div>
                         <label class="form-label">Order by</label>
-                        <select class="order-by form-select">
-                            <option value="nameAsc">Name (A-Z)</option>
-                            <option value="nameDesc">Name (Z-A)</option>
-                            <option value="workDaysAsc">Amount of work (Asc)</option>
-                            <option value="workDaysDesc" selected>Amount of work (Desc)</option>
-                            <option value="dateDesc">Newest</option>
-                            <option value="dateAsc">Oldest</option>
-                        </select>
+                        <div class="input-group">
+                            <select class="order-by form-select">
+                                <option value="name">Name</option>
+                                <option value="workDays" selected>Work days</option>
+                                <option value="lastChangeDate">Last updated</option>
+                                <option value="activeDateStart">Active development start</option>
+                                <option value="activeDateEnd">Active development end</option>
+                            </select>
+                            <span class="input-group-text" id="order-by-direction" data-direction="desc">
+                                <img class="icon" src="assets/icons/arrow_back_2_fill1_48px.svg" />
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="grid"></div>

@@ -73,34 +73,61 @@ function addLinksToCards() {
     }
 };
 
+const orderByDefaultDirections = {
+    "name": "asc",
+    "workDays": "desc",
+    "lastChangeDate": "desc",
+    "activeDateStart": "desc",
+    "activeDateEnd": "desc",
+};
 const orderBySelect = document.querySelector("#projects .filters .order-by");
+const orderByDirectionBtn = document.querySelector("#projects .filters #order-by-direction");
+
+let lastOrderBy = "workDays"
 function orderGrid() {
-    const orderBy = orderBySelect.value;
     const cardArray = Object.values(cards);
+
+    const orderBy = orderBySelect.value;
+    let orderByDirection = orderByDirectionBtn.dataset.direction;
+    if (orderBy !== lastOrderBy) {
+        lastOrderBy = orderBy;
+
+        if (orderByDefaultDirections[orderBy] !== orderByDirection)
+        orderByDirection = toggleOrderByDirectionBtn();
+    }
     
     cardArray.sort((a, b) => {
-        const projectA = projects[a.dataset.repoName];
-        const projectB = projects[b.dataset.repoName];
-        
-        // nameAsc as fallback.
-        const fallback = projectA.name.localeCompare(projectB.name);
+        let projectA, projectB, fallback;
+        if (orderByDirection == "asc") {
+            projectA = projects[a.dataset.repoName];
+            projectB = projects[b.dataset.repoName];
+            
+            // nameAsc as fallback.
+            fallback = projectA.name.localeCompare(projectB.name);
+        } else {
+            projectA = projects[b.dataset.repoName];
+            projectB = projects[a.dataset.repoName];
+
+            // nameAsc as fallback.
+            fallback = projectB.name.localeCompare(projectA.name);
+        }
         
         let diff = 0;
         switch (orderBy) {
-            case "nameDesc":
-                diff = projectB.name.localeCompare(projectA.name);
+            case "name":
+                diff = projectA.name.localeCompare(projectB.name);
                 break;
-            case "dateDesc":
-                diff = projectB.activeDateStart - projectA.activeDateStart;
-                break;
-            case "dateAsc":
-                diff = projectA.activeDateStart - projectB.activeDateStart;
-                break;
-            case "workDaysAsc":
+            case "workDays":
                 diff = projectA.workDays - projectB.workDays;
                 break;
-            case "workDaysDesc":
-                diff = projectB.workDays - projectA.workDays;
+            case "lastChangeDate":
+                diff = projectB.lastChangeDate - projectA.lastChangeDate;
+                break;
+            case "activeDateStart":
+                diff = projectB.activeDateStart - projectA.activeDateStart;
+                break;
+            case "activeDateEnd":
+                diff = projectB.activeDateEnd - projectA.activeDateEnd;
                 break;
         }
 
@@ -124,7 +151,9 @@ function applyFilters() {
     for (const [repoName, card] of Object.entries(cards)) {
         const project = projects[repoName];
         
-        if (searchValue !== "" && !project.name.toLowerCase().includes(searchValue)) {
+        if (searchValue !== ""
+                && !project.name.toLowerCase().includes(searchValue)
+                && !project.description.toLowerCase().includes(searchValue)) {
             card.hidden = true;
             continue;
         }
@@ -143,7 +172,7 @@ function applyFilters() {
     }
 
     updateProjectCount();
-};
+}
 
 let visibleCountElement = document.getElementById("visible-count");
 let totalCountElement = document.getElementById("total-count");
@@ -155,10 +184,24 @@ function updateProjectCount() {
     visibleCountElement.textContent = visibleCount;
 }
 
+function toggleOrderByDirectionBtn() {
+    if (orderByDirectionBtn.dataset.direction == "asc") {
+        orderByDirectionBtn.dataset.direction = "desc";
+    } else {
+        orderByDirectionBtn.dataset.direction = "asc";
+    }
+
+    return orderByDirectionBtn.dataset.direction;
+}
+
 orderBySelect.addEventListener("change", orderGrid);
 search.addEventListener("keyup", applyFilters);
 inspirationSelect.addEventListener("change", applyFilters);
 pLangSelect.addEventListener("change", applyFilters);
+orderByDirectionBtn.addEventListener("click", () => {
+    toggleOrderByDirectionBtn();
+    orderGrid();
+});
 
 addProjectCards();
 addLinksToCards();
