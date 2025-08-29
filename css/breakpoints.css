@@ -16,7 +16,7 @@
     #projects .filters > div,
     #projects .filters > select,
     #projects .filters > input {
-        max-width: 47%;
+        max-width: 49%;
     }
 
     #projects .grid .card {
@@ -62,11 +62,11 @@
     #projects .filters > div,
     #projects .filters > select,
     #projects .filters > input {
-        max-width: 23%;
+        max-width: 24%;
     }
 
     #projects .filters #inspiration {
-        max-width: 19%;
+        max-width: 21%;
     }
 
     #projects .filters #order-by {
