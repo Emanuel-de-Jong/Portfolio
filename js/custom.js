@@ -158,13 +158,13 @@ function orderGrid() {
                 diff = projectA.workDays - projectB.workDays;
                 break;
             case "lastChangeDate":
-                diff = projectB.lastChangeDate - projectA.lastChangeDate;
+                diff = projectA.lastChangeDate - projectB.lastChangeDate;
                 break;
             case "activeDateStart":
-                diff = projectB.activeDateStart - projectA.activeDateStart;
+                diff = projectA.activeDateStart - projectB.activeDateStart;
                 break;
             case "activeDateEnd":
-                diff = projectB.activeDateEnd - projectA.activeDateEnd;
+                diff = projectA.activeDateEnd - projectB.activeDateEnd;
                 break;
         }
 
