@@ -20,6 +20,7 @@ class Project:
         self.description = ""
 
         self.img_paths = []
+        self.highlights = []
         self.p_langs = []
 
 def setup_logger():
@@ -201,10 +202,21 @@ def set_data_from_readme(project, repo_path):
 
     project.description = description
 
-    active_date_range = readme.split("**Active Development:**")[1].split("<br>")[0].strip()
+    active_date_range = get_readme_field_values(readme, "Active Development")
     project.active_date_start, project.active_date_end = active_date_range.split(" - ")
 
-    project.last_change_date = readme.split("**Last Change:**")[1].split("<br>")[0].strip()
+    project.last_change_date = get_readme_field_values(readme, "Last Change")
+    
+    highlights_str = get_readme_field_values(readme, "Highlights")
+    if highlights_str != None:
+        project.highlights = highlights_str.split(", ")
+
+def get_readme_field_values(readme, field_name):
+    field_split = readme.split(f"**{field_name}:**")
+    if len(field_split) < 2:
+        return None
+    
+    return field_split[1].split("<br>")[0].strip()
 
 def projects_to_js(projects):
     js = "let projects = {"
@@ -222,27 +234,21 @@ def project_to_js(project):
     js += f",\n\t\t'{project.active_date_start}', '{project.active_date_end}', '{project.last_change_date}'"
     js += f",\n\t\t`{project.description}`"
 
-    js += ",\n\t\t["
-    for i in range(len(project.img_paths)):
-        img_path = project.img_paths[i]
-
-        if i != 0:
-            js += ", "
-        
-        js += f"'{img_path}'"
-    js += "]"
-
-    js += ",\n\t\t["
-    for i in range(len(project.p_langs)):
-        p_lang = project.p_langs[i]
-
-        if i != 0:
-            js += ", "
-        
-        js += f"'{p_lang}'"
-    js += "]"
+    js += list_to_js(project.img_paths)
+    js += list_to_js(project.highlights)
+    js += list_to_js(project.p_langs)
 
     js += ")"
+    return js
+
+def list_to_js(l):
+    js = ",\n\t\t["
+    for i in range(len(l)):
+        if i != 0:
+            js += ", "
+        
+        js += f"'{l[i]}'"
+    js += "]"
     return js
 
 if __name__ == "__main__":
