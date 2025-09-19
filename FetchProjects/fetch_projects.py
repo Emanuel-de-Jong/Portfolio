@@ -209,7 +209,8 @@ def set_data_from_readme(project, repo_path):
     
     highlights_str = get_readme_field_values(readme, "Highlights")
     if highlights_str != None:
-        project.highlights = highlights_str.split(", ")
+        highlights = highlights_str.split(", ")
+        project.highlights = [highlight.replace(" ", "-") for highlight in highlights]
 
 def get_readme_field_values(readme, field_name):
     field_split = readme.split(f"**{field_name}:**")

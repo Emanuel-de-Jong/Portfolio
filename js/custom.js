@@ -47,6 +47,7 @@ function addProjectCards() {
             <span class="badge made-for-badge">${project.madeFor}</span>`;
         
         for (let highlight of project.highlights) {
+            highlight = highlight.replaceAll("-", " ")
             cardHtml += `<span class="badge highlight-badge">${highlight}</span>`;
         }
 
@@ -84,6 +85,10 @@ let skillOptions = new Set();
 for (const project of Object.values(projects)) {
     for (const skill of project.skills) {
         skillOptions.add(skill);
+    }
+
+    for (const highlight of project.highlights) {
+        skillOptions.add(highlight);
     }
 }
 skillOptions = Array.from(skillOptions).sort();
@@ -205,7 +210,7 @@ function applyFilters() {
         if (skills.length > 0) {
             let hasAllSkills = true;
             for (const skill of skills) {
-                if (!project.skills.includes(skill)) {
+                if (!project.skills.includes(skill) && !project.highlights.includes(skill)) {
                     hasAllSkills = false;
                     break;
                 }
@@ -243,6 +248,14 @@ function toggleOrderByDirectionBtn() {
     return orderByDirectionBtn.dataset.direction;
 }
 
+function setDefaults() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('skill')) {
+        const skill = params.get('skill');
+        skillSelect.setValue(skill);
+    }
+}
+
 orderBySelect.addEventListener("change", orderGrid);
 search.addEventListener("keyup", applyFilters);
 inspirationSelect.addEventListener("change", applyFilters);
@@ -253,5 +266,6 @@ orderByDirectionBtn.addEventListener("click", () => {
 
 addProjectCards();
 addLinksToCards();
+setDefaults();
 updateProjectCount();
 orderGrid();
