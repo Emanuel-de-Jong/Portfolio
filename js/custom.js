@@ -45,7 +45,11 @@ function addProjectCards() {
         <p class="description">${project.description}</p>
         <div class="tags">
             <span class="badge made-for-badge">${project.madeFor}</span>`;
-            
+        
+        for (let highlight of project.highlights) {
+            cardHtml += `<span class="badge highlight-badge">${highlight}</span>`;
+        }
+
         for (let skill of project.skills) {
             skill = skill.replaceAll("-", " ")
             cardHtml += `<span class="badge skill-badge">${skill}</span>`;

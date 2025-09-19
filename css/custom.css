@@ -211,6 +211,11 @@ header h1 {
     color: #f8f9fa;
 }
 
+#projects .grid .card .highlight-badge {
+    background-color: #479f76;
+    color: #f8f9fa;
+}
+
 #projects .grid .card .skill-badge {
     background-color: #6c757d;
     color: #f8f9fa;
