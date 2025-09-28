@@ -146,7 +146,7 @@ let projects = {
 	'Portfolio': new Project('Portfolio', 'Portfolio', 'main', 'Hobby',
 		'2025-07-31', '2025-08-29', '2025-09-19',
 		`A website to show off my projects on GitHub.`,
-		['Screenshots/1-Page.png'],
+		['Screenshots/1-Page.png', 'Screenshots/2-Page_Filters.png', 'Screenshots/3-Mobile-1.png', 'Screenshots/4-Mobile-2.png'],
 		[],
 		['JavaScript', 'Python', 'CSS', 'HTML']),
 	'Portfolio-2019': new Project('Portfolio-2019', 'Portfolio 2019', 'master', 'Hobby',
