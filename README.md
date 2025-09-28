@@ -6,5 +6,5 @@ A website to show off my projects on GitHub.
 
 | | |
 | :---: | :---: |
-| ![](/Screenshots/1-Page.png) | ![](/Screenshots/.png) |
-   
+| ![](/Screenshots/1-Page.png) | ![](/Screenshots/2-Page_Filters.png) |
+| ![](/Screenshots/3-Mobile-1.png) | ![](/Screenshots/4-Mobile-2.png) |
