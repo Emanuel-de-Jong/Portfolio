@@ -180,7 +180,9 @@ def set_data_from_readme(project, repo_path):
     with open(readme_path, 'r', encoding='utf-8') as f:
         readme = f.read().replace(("\r\n"), "\n").replace("\n\r", "\n")
     
-    project.name = readme.split("\n")[0].replace("#", "").strip()
+    name = readme.split("\n")[0].replace("#", "").strip()
+    name = name.replace("'", "")
+    project.name = name
 
     description_line_index = 1
     if (project.made_for == "Saxion"):
