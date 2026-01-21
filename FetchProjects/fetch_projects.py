@@ -60,7 +60,8 @@ def repos_to_projects():
     projects = []
 
     repos_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    for repo_name in os.listdir(repos_path):
+    repo_names = sorted(os.listdir(repos_path))
+    for repo_name in repo_names:
         repo_path = os.path.join(repos_path, repo_name)
         if os.path.isdir(repo_path):
             if not os.path.exists(os.path.join(repo_path, ".git")):
@@ -139,14 +140,22 @@ def set_data_from_local_clone(project, repo_path):
     set_data_from_readme(project, repo_path)
 
 def set_screenshot_paths(project, repo_path):
-    screenshots_path = os.path.join(repo_path, "Screenshots")
-    if not os.path.exists(screenshots_path):
+    screenshots_path = None
+    for dir in ["Screenshots", "screenshots"]:
+        path = os.path.join(repo_path, dir)
+        if os.path.exists(path):
+            screenshots_path = path
+            break
+
+    if not screenshots_path:
         # logger.warning("No 'Screenshots' directory.")
         return
     
-    for filename in os.listdir(screenshots_path):
-        if filename.lower().endswith('.png'):
-            project.img_paths.append(f"Screenshots/{filename}")
+    dir = os.path.basename(screenshots_path)
+    filenames = sorted(os.listdir(screenshots_path))
+    for filename in filenames:
+        if filename.lower().endswith(".png"):
+            project.img_paths.append(f"{dir}/{filename}")
     
     # if len(project.img_paths) == 0:
     #     logger.warning("No PNGs in the 'Screenshots' directory.")
@@ -188,7 +197,16 @@ def set_data_from_readme(project, repo_path):
     if (project.made_for == "Saxion"):
         description_line_index = 3
 
-    description = readme.split("\n")[description_line_index]
+    description = ""
+    lines = readme.split("\n")
+    while description_line_index < len(lines):
+        line = lines[description_line_index].strip()
+        if line and not line.startswith(">"):
+            description = line
+            break
+        
+        description_line_index += 1
+
     description = description.strip().replace("`", "")
     
     # Change markdown link syntax `[text](url)`` into just the text.
